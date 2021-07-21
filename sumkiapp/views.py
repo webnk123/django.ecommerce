@@ -174,12 +174,6 @@ def favorites(request):
 	
 	return render(request, 'sumkiapp/favs.html', {"products": fav_products})
 
-
-
-
-
-
-
 def catalog(request):
 	products = Product.objects.all().order_by('id')[:8]
 	return render(request, 'sumkiapp/catalog.html', {"products": products})
