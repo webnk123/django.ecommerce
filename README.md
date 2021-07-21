@@ -1,3 +1,3 @@
 # django.ecommerce
-ecomerce website written in django 
+ecommerce website written in django 
 
