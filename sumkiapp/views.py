@@ -38,7 +38,7 @@ def is_ajax(request):
 @require_GET
 def homepage(request):
 	products_all = Product.objects.all()
-	paginator = Paginator(products_all, per_page=12)
+	paginator = Paginator(products_all, per_page=8)
 	page_num = int(request.GET.get("page", 1))
 	if page_num > paginator.num_pages:
 		return HttpResponse(status=200)
@@ -67,10 +67,9 @@ def contacts(request):
 	return render(request, 'sumkiapp/contacts.html')
 
 def collection(request, coll_name):
-	collections = ['Puff-Love-Bag','Big-Love-Bag', 'Mini-Love-Bag','Round-Love-Bag','wallet','belts']
+	collections = ['Lorem','ipsum', 'dolor','sit']
 	if coll_name in collections:
-		coll_name2 = coll_name.replace('-', ' ')
-		content = Product.objects.filter(product_collection__contains=coll_name2)
+		content = Product.objects.filter(product_collection__contains=coll_name)
 		return render(request, 'sumkiapp/collection.html', {"products": content, "coll": coll_name})
     
 	return render(request, "sumkiapp/404page.html", status=404) 

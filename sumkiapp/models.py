@@ -6,11 +6,11 @@ import datetime
 
 class Product(models.Model):
 	product_name = models.CharField(max_length=200)
-	old_price = models.CharField(max_length=20)
+	old_price = models.CharField(max_length=20, blank=True, null=True)
 	price = models.CharField(max_length=20)
 	article = models.CharField(max_length=50)
 	descrip = models.TextField()
-	descripoint = models.TextField()
+	descripoint = models.TextField(blank=True, null=True)
 	primary_image = models.ImageField(upload_to='images', blank=True, null=True)
 	image2 = models.ImageField(upload_to='images', blank=True, null=True)
 	image3 = models.ImageField(upload_to='images', blank=True, null=True)

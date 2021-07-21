@@ -31,7 +31,7 @@ class CollectionSitemap(Sitemap):
 	priority = 0.8
 
 	def items(self):
-		return ['Puff-Love-Bag','Big-Love-Bag', 'Mini-Love-Bag','Round-Love-Bag','wallet','belts']
+		return ['Lorem','ipsum', 'dolor','sit']
 
 	def location(self, item):
 		return '/' + str(item)
