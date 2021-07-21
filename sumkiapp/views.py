@@ -7,8 +7,8 @@ from django.core.paginator import Paginator
 from django.http import Http404, HttpResponse
 from django.conf import settings
 from django.contrib.staticfiles import finders
-from .obj_create import save_order, create_order, save_quickorder, create_review
-from .email_logic import moscowtime, logo_data, mail_validation, send_quickorder_email, send_order_email
+from .obj_create import create_order, save_quickorder, create_review
+from .email_logic import moscowtime, logo_data, mail_validation, send_quickorder_email, send_order_email, order_create_and_send, quickorder_create_and_send
 
 
 def auth(request):
@@ -27,7 +27,7 @@ def order_create(request):
 		if form.is_valid():
 			order_create_and_send(form,cart)
 			cart.clear()
-			return render(request, 'sumkiapp/created.html', {'order': order})
+			return render(request, 'sumkiapp/created.html')
 	else:
 		form = OrderCreateForm
 	return render(request, 'sumkiapp/create.html', {'cart': cart, 'form': form})

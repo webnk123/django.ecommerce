@@ -137,6 +137,6 @@ this project in production find a business email provider.
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'example@mail.email'
+EMAIL_HOST_USER = 'youremail'
 EMAIL_HOST_PASSWORD = 'yourpassword'
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

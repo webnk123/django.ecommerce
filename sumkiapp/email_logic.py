@@ -9,6 +9,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from .obj_create import save_order, create_order, save_quickorder
+import pytz
 
 
 # function used to get current Moscow time to attach to email
@@ -43,19 +45,19 @@ def send_quickorder_email(iden, this_product, showtime, phone, address, comment)
 	html_content = render_to_string("sumkiapp/quick_email_template.html", {'iden': iden, 'product': this_product, 'time': showtime, 'phone': phone, 'address': address, 'comment': comment})
 	text_content = strip_tags(html_content)
 
-	email = form_email_multialt(topic, text_content, rec_list)
+	email = form_email_multialt(topic, text_content, rec_list, html_content)
 
 	img_path = settings.BASE_DIR + this_product.primary_image.url
 	pk = this_product.pk
 	email.attach(logo_data(img_path, pk))
-	email.send(fail_silently=True)
+	email.send(fail_silently=False)
 
 def send_order_email(showtime, name, phone, address, comment, city, email, cart, iden, rec_list):
 	topic = "Номер Заказа:  " + str(iden)
 	html_content = render_to_string("sumkiapp/order_email_template.html", {'time': showtime, 'name': name, 'phone': phone, 'address': address, 'comment': comment, 'city': city, 'email': email, 'cart': cart, 'iden': iden})
 	text_content = strip_tags(html_content)
 
-	email = form_email_multialt(topic, text_content, rec_list)
+	email = form_email_multialt(topic, text_content, rec_list, html_content)
 
 	for item in cart:
 		this_product = Product.objects.get(product_name = item['product'])
@@ -63,9 +65,9 @@ def send_order_email(showtime, name, phone, address, comment, city, email, cart,
 		pk = this_product.pk
 		email.attach(logo_data(img_path, pk))
 
-	email.send(fail_silently=True)
+	email.send(fail_silently=False)
 
-def form_email_multialt(topic, text_content, rec_list):
+def form_email_multialt(topic, text_content, rec_list, html_content):
 	email = EmailMultiAlternatives(
 		#subject
 		topic,
@@ -82,9 +84,9 @@ def form_email_multialt(topic, text_content, rec_list):
 
 
 def order_create_and_send(form,cart):
-	email, iden, name, phone, address, comment, city = save_order(form)
+	email, iden, name, phone, address, comment, city, order = save_order(form)
 	rec_list = mail_validation(email)
-	create_order(cart)
+	create_order(cart,order)
 	showtime = moscowtime()
 	send_order_email(showtime, name, phone, address, comment, city, email, cart, iden, rec_list)
 

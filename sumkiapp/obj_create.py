@@ -1,9 +1,8 @@
 from .forms import OrderCreateForm
-from .models import OrderItem, Quickorder, Review
+from .models import OrderItem, Quickorder, Review, Product
 
 
 def save_order(form):
-	form = OrderCreateForm(request.POST)
 	name = form.cleaned_data['name']
 	phone = form.cleaned_data['phone']
 	address = form.cleaned_data['address']
@@ -13,10 +12,10 @@ def save_order(form):
 	order = form.save()
 	iden = order.id 
 
-	return email, iden, name, phone, address, comment, city
+	return email, iden, name, phone, address, comment, city, order
 
 
-def create_order(cart):
+def create_order(cart,order):
 	for item in cart:
 		OrderItem.objects.create(order=order, 
 								product=item['product'],
