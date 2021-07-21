@@ -1,0 +1,51 @@
+.resize {
+    height:25px
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  flex-shrink: 0;
+    height: 50px;
+    background-color: white;
+  line-height: 50px;
+  text-align: center;
+  color: black;
+}
+
+
+
+a:link {
+    color: black;
+    text-decoration: none;
+    }
+
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.nav-link {
+	font-size:12px
+	}
+
+.sear {
+    height:20px
+}
+
+.zoom:hover {
+transform: scale(1.05);
+}
+
+
+@media screen and (max-width: 768px) {
+.navbar-nav {
+text-align:left;
+}
+}
+
+

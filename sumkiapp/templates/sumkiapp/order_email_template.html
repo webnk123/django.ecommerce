@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title></title>
+</head>
+<body>
+	       <div class="center">
+            <h2 style="background-color: grey; text-align: left;">Время: {{ time }}  Номер заказа: A{{ iden }}</h2>
+
+        </div>
+
+<p>Имя: {{ name }}</p>
+<p>Телефон: {{ phone }}</p>
+<p>Адрес: {{ address }}</p>
+<p>Коммент: {{ comment }}</p>
+<p>Город: {{ city }}</p>
+<p>E-mail: {{ email }}</p>
+
+<table class="table table-hover table-responsive">
+
+<thead>
+    <tr>
+        <th>ФОТО</th>
+        <th>ТОВАР</th>
+        <th>АРТИКУЛ</th>
+        <th>КОЛ-ВО</th>
+        <th>ЦЕНА ЗА ШТ.</th>
+        <th>ИТОГ. ЦЕНА</th>
+    </tr>
+</thead>
+
+<tbody>
+        {% for item in cart %}
+            {% with product=item.product %}
+                <tr>
+                    <td>
+                        <a href="https://www.MARCJACOBS-RUSSIA.com/{{ product.get_absolute_url }}">
+                            <img src="cid:{{ product.pk }}" width="150" height="150">
+                        </a>
+                    </td>
+                    <a href="https://www.MARCJACOBS-RUSSIA.com/{{ product.get_absolute_url }}">
+                    <td>{{ product.product_name}}</td>
+                    </a>
+                    <td>{{ product.article }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.total_price }}</td>
+                </tr>
+            {% endwith %}
+        {% endfor %}
+        <tr class="total">
+            <td>ИТОГ</td>
+            <td colspan="4"></td>
+            <td>{{ cart.get_total_price }}</td>
+        </tr>
+        </tbody>
+
+</table>
+
+
+
+</body>
+</html>

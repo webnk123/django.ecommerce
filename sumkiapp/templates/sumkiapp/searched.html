@@ -1,0 +1,56 @@
+{% extends 'sumkiapp/header.html' %}
+
+
+{% block content %}
+	<br>
+	<br>
+	{% if products %}
+	<h1 align="center">ТОВАРЫ ПО ЗАПРОСУ {{ searchword }}</h1>
+	<br>
+	<br>
+	<div class="container-fluid">
+	<div class="row">
+		{% for product in products %}
+			<div class="col-xs-1 col-sm-3 col-lg-3 col-md-3">
+				<a href="{{ product.get_absolute_url }}">
+				<div class="zoom">
+				<img src="{{ product.primary_image.url }}" class="img-fluid">
+				</div>
+				</a>
+				<a href="{{ product.get_absolute_url }}">{{ product.product_name }}</a>
+				<br>
+				<p style="float: left;"><s>{{ product.old_price }}</s> руб  <strong>{{ product.price }} руб</strong></p>
+			</div>
+		{% endfor %}
+	</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	{% else %}
+		<h3 align="center">К СОЖАЛЕНИЮ ПО ЗАПРОСУ</h3>
+		<h3 align="center"><strong>{{ searchword }}</strong></h3> 
+		<h3 align="center">НИЧЕГО НЕ НАЙДЕНО</h3>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>		
+	{% endif %}
+{% endblock %}

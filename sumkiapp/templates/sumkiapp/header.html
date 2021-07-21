@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+  <title>{% block title %}{% endblock %}</title>
+
+	<meta name='viewport' content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+
+  <meta name="description" content="{% block description %}{% endblock %}">
+ 
+  <link rel="shortcut icon" type="image/jpg" href="{% static 'sumkiapp/fav12.png' %}">
+  
+  <link rel="stylesheet" type="text/css" href="{% static 'sumkiapp/css/styling.css' %}">
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white">
+  <div class="container-fluid">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+    <a href="/">
+  	<img  width="220" height="60"src="{% static 'sumkiapp/123.jpg' %}">
+    </a>
+
+
+      <ul class="nav navbar-nav d-md-none">
+      <li class="pull-left"><a href="{% url 'sumkiapp:cart_detail' %}"><img class="resize"  src="{% static 'sumkiapp/shopping-cart.png' %}"></a></li>
+    </ul>
+
+          <ul class="nav navbar-nav d-md-none">
+      <li class="pull-left"><a href="{% url 'sumkiapp:favorites' %}"><img class="resize"  src="{% static 'sumkiapp/heart.png' %}"></a></li>
+    </ul>
+
+
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/catalog" style="font-size:14px;"><strong>СУМКИ</strong></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" data-toggle='dropdown' aria-expanded="false" style="font-size:14px;"><strong>
+            КОЛЛЕКЦИИ
+          </strong></a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/Puff-Love-Bag">Puff Love Bag</a></li>
+            <li><a class="dropdown-item" href="/Big-Love-Bag">Big Love Bag</a></li>
+            <li><a class="dropdown-item" href="/Mini-Love-Bag">Mini Love Bag</a></li>
+            <li><a class="dropdown-item" href="/Round-Love-Bag">Round Love Bag</a></li>
+            <li><a class="dropdown-item" href="/wallet">Кошельки</a></li>
+            <li><a class="dropdown-item" href="/belts">Ремни</a></li>
+
+
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth" style="font-size:14px;"><strong>АУТЕНТИЧНОСТЬ</strong></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/delivery" style="font-size:14px;"><strong>ДОСТАВКА</strong></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about" style="font-size:14px;"><strong>О НАС</strong></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reviews" style="font-size:14px;"><strong>ОТЗЫВЫ</strong></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contacts" style="font-size:14px;"><strong>КОНТАКТЫ</strong></a>
+        </li>
+      </ul>
+
+      <form class="d-flex" action="{% url 'sumkiapp:search' %}" method="post">
+        {% csrf_token %}
+        {{ search_form }}
+        <button class="btn btn-outline-dark" type="submit" style="margin-bottom: 4px;">
+          <img class='resize'src="{% static 'sumkiapp/search.png' %}">
+        </button>
+      </form>
+
+      <div class='d-flex d-none d-lg-block' style="margin-bottom: 4px;margin-left: 3px; float: left;">
+      <a href="{% url 'sumkiapp:cart_detail' %}" style="margin-left: 1px;margin-top: 5px;">
+        <button class="btn btn-outline-dark" type="button">
+          <img class='resize' src="{% static 'sumkiapp/shopping-cart.png' %}">
+        </button>
+      </a>
+    </div>
+
+      <div class='d-flex d-none d-lg-block' style="margin-bottom: 5px;margin-left: 3px;">
+      <a href="{% url 'sumkiapp:favorites' %}" style="margin-left: 1px;margin-top: 5px;">
+        <button class="btn btn-outline-dark" type="button">
+          <img class='resize' src="{% static 'sumkiapp/heart.png' %}">
+        </button>
+      </a>
+    </div>
+
+
+
+    </div>
+</nav>
+{% block content %}
+{% endblock %}
+<br>
+<br>
+
+<footer>
+<p style="font-size:13px; line-height:1.5;">Sample logo / Интернет-магазин  / <strong><a href="/privacy-policy">Политика конфиденциальнсти</a></strong> и <strong><a href="/terms-of-use">пользовательское соглашение</a></strong></p>
+</footer>
+</body>
+</html>

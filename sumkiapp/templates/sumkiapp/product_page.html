@@ -1,0 +1,184 @@
+{% extends 'sumkiapp/header.html' %}
+{% load static %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="container-fluid" itemscope="" itemtype="https://schema.org/Product">
+  <div class="row justify-content-center">
+    <div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
+ 
+        <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-ride="carousel" style="width: 600px; height:600px; margin: 0 auto; overflow: hidden;">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100" itemprop="image" src="{{ product.primary_image.url }}" alt="First slide">
+            </div>
+            <div class="carousel-item">
+      <img class="d-block w-100 cropimg" itemprop="image" src="{{ product.image2.url }}" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 cropimg" itemprop="image" src="{{ product.image3.url }}" alt="Third slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 cropimg" itemprop="image" src="{{ product.image4.url }}" alt="Third slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 cropimg" itemprop="image" src="{{ product.image5.url }}" alt="Third slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+  </a>
+</div>
+
+
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-lg-6 col-md-6">
+        <p itemprop="model">Артикул: {{ product.article }}</p>
+        <h1 itemprop="name" align="center">{{ product.product_name }}</h1>
+        <div class="center">
+        <p style="font-size:18px; float: left; margin-top: 6px; margin-bottom: 1px;"><s>{{ product.old_price }} руб</s></p>
+        <div itemprop="offers" itemscope="" itemtype="https://schema.org/Offer">
+        <meta itemprop="priceCurrency" content="RUB">  
+        <strong style="font-size:25px; margin-left: 8px;"><strong itemprop="price">{{ product.price }}</strong> руб</strong>
+        </div>
+      </div>
+      <br>
+
+
+
+
+          <form action="{% url 'sumkiapp:cart_add' product.id %}" method="post">
+            {{ form2 }}
+            {% csrf_token %}
+          <button type="submit" class="btn btn-outline-dark">В КОРЗИНУ</button>
+          </form>
+
+
+        <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">БЫСТРАЯ ПОКУПКА</button>
+
+
+
+        <form action="{% url 'sumkiapp:add_to_fav' id=product.id %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="type" value="fav">
+          <input type="hidden" name="url_from" value="{{ request.path }}">
+          <button type="submit" class="btn btn-outline-dark">В ИЗБРАННОЕ</button>
+          
+        </form>
+
+        {% if request.session.favorites %}
+          {% for item in request.session.favorites %}
+            {% if item.id == product.id|stringformat:"i" %}
+                <form action="{% url 'sumkiapp:remove_from_fav' id=product.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="type" value="fav">
+                  <input type="hidden" name="url_from" value="{{ request.path }}">
+                  <button type="submin" class="btn btn-outline-dark">УДАЛИТЬ ИЗ ИЗБРАННОГО</button>
+                </form>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">БЫСТРАЯ ПОКУПКА</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" align="center">
+        <form action="/fast_order/" method="POST">
+           {% csrf_token %}
+           {{ form.non_field_errors }}
+
+          <div class='form-group row' style="display: none">
+              {{ form.product_name.errors }}
+              <label for="{{ form.product_name.id_for_label }}">Имя</label>
+                  {{ form.product_name }}
+              <br>
+          </div>
+           <div class="form-group row">
+              {{ form.phone.errors }}
+              <label for="{{ form.phone.id_for_label }}">Телефон</label>
+              <br>
+                {{ form.phone }}
+           </div>
+           <div class="form-group row">
+              {{ form.address.errors }}
+              <label for="{{ form.address.id_for_label }}">Город</label>
+              <br>
+                {{ form.address }}
+           </div>
+           <div class="form-group row">
+              {{ form.comment.errors }}
+              <label for="{{ form.comment.id_for_label }}">Комментарий</label>
+              <br>
+                {{ form.comment }}
+           </div>
+            <button type="submit" value="Submit" class="btn btn-outline-dark">КУПИТЬ</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+        <br>
+        <br>
+        <p>{{ product.descripoint }}</p>
+        <p itemprop="description">{{ product.descrip }}</p>
+        <div align="middle">
+        <img  width="55%" src="{% static 'sumkiapp/lowimg.png' %}">
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('.carousel').on('touchstart', function(event){
+    const xClick = event.originalEvent.touches[0].pageX;
+    $(this).one('touchmove', function(event){
+        const xMove = event.originalEvent.touches[0].pageX;
+        const sensitivityInPx = 7;
+
+        if( Math.floor(xClick - xMove) > sensitivityInPx ){
+            $(this).carousel('next');
+
+        }
+        else if( Math.floor(xClick - xMove) < -sensitivityInPx ){
+            $(this).carousel('prev');
+
+        }
+    });
+    $(this).on('touchend', function(){
+        $(this).off('touchmove');
+    });
+});
+</script>
+
+{% endblock %}

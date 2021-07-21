@@ -1,0 +1,55 @@
+{% extends 'sumkiapp/header.html' %}
+{% load static %}
+{% block title %}
+	your shopping cart
+{% endblock %}
+{% block content %}
+    <h1 align="center">КОРЗИНА</h1>
+    <table class="table table-hover table-responsive">
+        <thead>
+        <tr>
+            <th></th>
+            <th>ТОВАР</th>
+            <th>КОЛИЧЕСТВО</th>
+            <th></th>
+            <th>ЦЕНА ЗА ШТ</th>
+            <th>ЦЕНА</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart %}
+            {% with product=item.product %}
+                <tr>
+                    <td>
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{{ product.primary_image.url }}" width="150" height="150">
+                        </a>
+                    </td>
+                    <td>{{ product.product_name}}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td><a href="{% url 'sumkiapp:cart_remove' product.id%}">УДАЛИТЬ</a></td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.total_price }}</td>
+                </tr>
+            {% endwith %}
+        {% endfor %}
+        <tr class="total">
+            <td>ИТОГ</td>
+            <td colspan="4"></td>
+            <td>{{ cart.get_total_price }}</td>
+        </tr>
+        </tbody>
+    </table>
+        <div class="center">
+        <a href="{% url 'sumkiapp:order_create' %}" class="button">
+        <button class="btn btn-outline-dark" type="button">КУПИТЬ
+        </button>
+        </a>
+        </div>
+            <div class="center">
+      <a href="/">
+        <button class="btn btn-outline-dark" type="button">НА ГЛАВНУЮ
+        </button>
+      </a>
+     </div>
+{% endblock %}
