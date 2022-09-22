@@ -4,6 +4,7 @@
 	your shopping cart
 {% endblock %}
 {% block content %}
+
     <br>
     <br>
     <br>
@@ -25,7 +26,7 @@
                 <tr>
                     <td>
                         <a href="{{ product.get_absolute_url }}">
-                            <img src="{{ product.primary_image.url }}" width="150" height="150">
+                            <img src="{{ product.images.first.image.url }}" width="150" height="150">
                         </a>
                     </td>
                     <td>{{ product.product_name}}</td>

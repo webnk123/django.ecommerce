@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+ENABLE_SENDING_EMAILS = False
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -65,6 +67,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'sumkiapp.context_processors.include_search_form',
+                'sumkiapp.context_processors.header_context',
             ],
         },
     },
